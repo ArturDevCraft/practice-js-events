@@ -13,7 +13,6 @@ function clickHandler(e) {
 	setTimeout(
 		(e) => {
 			e.classList.add('clicked');
-			console.log(e);
 		},
 		time,
 		e.currentTarget
