@@ -10,28 +10,31 @@ const stats = {
 /* tutaj umieść swój kod */
 const p = document.querySelectorAll('.text');
 p.forEach((pEl) => {
-	pEl.addEventListener('click', (el) => {
-		const className = el.target.classList;
-		if (className.contains('link')) {
-			el.preventDefault();
-			const href = el.target.getAttribute('href');
-			if (stats.links[href] !== undefined) {
-				stats.links[href]++;
-			} else {
-				stats.links[href] = 1;
-			}
-		}
-
-		if (className.contains('text')) {
-			const id = el.target.dataset.id;
-			if (stats.paragraphs[id] !== undefined) {
-				stats.paragraphs[id]++;
-			} else {
-				stats.paragraphs[id] = 1;
-			}
-		}
-	});
+	pEl.addEventListener('click', statsClickHandler);
 });
+
+function statsClickHandler(el) {
+	const currentClassName = el.currentTarget.classList;
+	const targetClassName = el.target.classList;
+	if (targetClassName.contains('link')) {
+		el.preventDefault();
+		const href = el.target.getAttribute('href');
+		increaseStats(stats, 'links', href);
+	}
+
+	if (currentClassName.contains('text')) {
+		const id = el.currentTarget.dataset.id;
+		increaseStats(stats, 'paragraphs', id);
+	}
+}
+
+function increaseStats(stats, type, key) {
+	if (stats[type][key] !== undefined) {
+		stats[type][key]++;
+	} else {
+		stats[type][key] = 1;
+	}
+}
 
 /* nie modyfikuj kodu poniżej, ale przeanalizuj go */
 
